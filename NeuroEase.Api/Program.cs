@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NeuroEase.Application.Authentication.Dto;
 using NeuroEase.Core.Data;
-using NeuroEase.Core.Helpers;
 using NeuroEase.Core.Model.Entity;
 using NeuroEase.Core.Model.Models;
 using NeuroEase.Core.Repository;
-using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -103,30 +103,21 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
 // Autofac Container configuration
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
 
-    // Register all MediatR handlers
-    containerBuilder.RegisterAssemblyTypes(
-                typeof(NeuroEase.Application.Authentication.Command.LoginCommand).Assembly
-
-        //typeof(Core.Layer.Handlers.EvaluateRulesCommandHandler).Assembly
-    )
-    .AsClosedTypesOf(typeof(IRequestHandler<,>))
-    .InstancePerLifetimeScope();
 
     // Repositories
-    containerBuilder.RegisterType<AuthRepository>().As<IAuthenticationRepository>().InstancePerLifetimeScope();
+    containerBuilder.RegisterType<AuthRepository>()
+        .As<IAuthenticationRepository>()
+        .InstancePerLifetimeScope();
 
     // Helpers
-    containerBuilder.RegisterType<JwtHelper>().As<IJwtHelper>().InstancePerLifetimeScope();
-
-    //// Services
-    //containerBuilder.RegisterType<RuleService>().As<IRuleService>().InstancePerLifetimeScope();
+    containerBuilder.RegisterType<JwtHelper>()
+        .As<IJwtHelper>()
+        .InstancePerLifetimeScope();
 });
-
 
 // MediatR registration
 builder.Services.AddMediatR(cfg =>
@@ -137,15 +128,10 @@ builder.Services.AddMediatR(cfg =>
     );
 });
 
-// Add services to the container.
-
-builder.Services.AddOpenApi();
-
-
-//builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
+// ❌ Remove this — AutoMapper is now handled by Autofac
 
 var app = builder.Build();
+
 // Middleware pipeline
 if (app.Environment.IsDevelopment())
 {
@@ -159,7 +145,4 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
-
-

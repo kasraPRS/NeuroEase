@@ -43,6 +43,7 @@ namespace NeuroEase.Core.Repository
                         Result = true,
                         Success = true,
                         Message = "ثبت‌نام با موفقیت انجام شد",
+                        UserId = user.Id
                     };
                 }
 
@@ -78,6 +79,7 @@ namespace NeuroEase.Core.Repository
                         Success = true,
                         Message = "ورود موفقیت‌آمیز بود",
                         Token = token,
+                        UserId = user.Id
                     };
                 }
 

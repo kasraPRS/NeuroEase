@@ -1,8 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using NeuroEase.Application.Authentication.Command;
-
 namespace NeuroEase.Api.Controllers
 {
     [ApiController]
@@ -20,7 +18,6 @@ namespace NeuroEase.Api.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterCommand command)
         {
             var result = await _mediator.Send(command);
-            Console.WriteLine(result);
             if (result.Success)
             {
                 return Ok(result);
@@ -34,6 +31,7 @@ namespace NeuroEase.Api.Controllers
         public async Task<IActionResult> Login([FromBody] LoginCommand command)
         {
             var result = await _mediator.Send(command);
+            
             if (result.Success)
             {
                 return Ok(result);

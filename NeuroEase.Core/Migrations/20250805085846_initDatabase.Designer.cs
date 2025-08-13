@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NeuroEase.Core.Data;
 
@@ -11,9 +12,11 @@ using NeuroEase.Core.Data;
 namespace NeuroEase.Core.Migrations
 {
     [DbContext(typeof(NeuroEaseDbContext))]
-    partial class NeuroEaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250805085846_initDatabase")]
+    partial class initDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -549,29 +552,6 @@ namespace NeuroEase.Core.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("NeuroEase.Core.Model.Entity.CompanyData", b =>
-                {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Company")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Expenses")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ProfitMargin")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Revenue")
-                        .HasColumnType("float");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("companyDatas");
                 });
 
             modelBuilder.Entity("NeuroEase.Core.Model.Entity.DiagnosticRule", b =>
