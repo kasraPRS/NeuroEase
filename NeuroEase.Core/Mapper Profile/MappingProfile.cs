@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
-using NeuroEase.Application.Authentication.Dto;
-using NeuroEase.Core.Model.Models;
+using NeuroEase.Core.Model.Entity; // محل ApplicationUser
+using NeuroEase.Core.Model.Models; // محل AuthResultModel
 
-namespace NeuroEase.Core.Helpers
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile // ✅ اینجا باید Profile باشه
+    public MappingProfile()
     {
-        public MappingProfile()
-        {
-            CreateMap<AuthResultModel, AuthResultDto>()
-                .ForMember(dest => dest.Result, opt => opt.MapFrom(src => true))
-                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => true))
-                .ForMember(dest => dest.Message, opt => opt.MapFrom(src => "LOGIN_WAS_SUCCESS"))
-                .ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.Token));
-        }
+        CreateMap<ApplicationUser, AuthResultModel>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
+            .ForMember(dest => dest.Token, opt => opt.Ignore()) // Token جدا تولید می‌شود
+            .ForMember(dest => dest.Message, opt => opt.Ignore())
+            .ForMember(dest => dest.Success, opt => opt.Ignore())
+            .ForMember(dest => dest.Result, opt => opt.Ignore());
     }
 }

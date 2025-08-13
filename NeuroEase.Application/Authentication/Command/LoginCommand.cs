@@ -9,7 +9,7 @@ namespace NeuroEase.Application.Authentication.Command
 {
     public class LoginCommand : IRequest<AuthResultModel>
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
     }
 }

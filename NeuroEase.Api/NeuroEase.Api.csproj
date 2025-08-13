@@ -37,7 +37,6 @@
     <ProjectReference Include="..\NeuroEase.Core\NeuroEase.Core.csproj" />
     <ProjectReference Include="..\NeuroEase.Application\NeuroEase.Application.csproj" />
     <ProjectReference Include="..\NeuroEase.Core.Model\NeuroEase.Core.Model.csproj" />
-    <ProjectReference Include="..\NeuroEase.Infrastructure\NeuroEase.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

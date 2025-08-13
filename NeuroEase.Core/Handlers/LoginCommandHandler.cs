@@ -22,7 +22,6 @@ namespace NeuroEase.Core.Handlers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IJwtHelper _jwtHelper;
         private readonly ILogger<LoginCommandHandler> _logger;
-        private readonly IMapper _mapper;
 
         public LoginCommandHandler(
             IAuthenticationRepository authRepository,
@@ -30,7 +29,6 @@ namespace NeuroEase.Core.Handlers
             IJwtHelper jwtHelper,
             ILogger<LoginCommandHandler> logger,
             UserManager<ApplicationUser> userManager
-            //IMapper mapper
             )
         {
             _authRepository = authRepository;
@@ -38,7 +36,6 @@ namespace NeuroEase.Core.Handlers
             _jwtHelper = jwtHelper;
             _logger = logger;
             _userManager = userManager;
-            //_mapper = mapper;
         }
         public async Task<AuthResultModel> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
@@ -62,8 +59,6 @@ namespace NeuroEase.Core.Handlers
 
                 var token = _jwtHelper.GenerateJwtToken(user);
                 _logger.LogInformation($"User logged in successfully: {request.Email}");
-                //_mapper.Map<user, AuthResultModel>(user);
-
 
                 return new AuthResultModel
                 {
